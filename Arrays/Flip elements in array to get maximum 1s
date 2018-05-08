@@ -1,0 +1,29 @@
+vector<int> Solution::flip(string A) {
+    int finalleft=-1,finalright=-1;
+    int sum=0,finalsum=0;
+    int n=A.size();
+    int start=0,end=0;
+    for(int i=0;i<n;++i){
+        if(A[i]=='0')
+            sum++;
+        else
+            sum--;
+            
+        if(sum<0){
+            sum=0;
+            start=i+1;
+        }
+        
+        if(sum>finalsum){
+            finalsum=sum;
+            finalleft=start;
+            finalright=i;
+        }
+    }
+    vector<int> ans;
+    if(finalleft!=-1&&finalright!=-1){
+        ans.push_back(++finalleft);
+        ans.push_back(++finalright);
+    }
+    return ans;
+}
