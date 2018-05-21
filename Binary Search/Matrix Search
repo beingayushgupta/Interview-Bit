@@ -1,0 +1,13 @@
+bool searchMatrix(vector<vector<int> > &A, int B) {
+            int n = A.size();
+            int m = A[0].size();
+            int l = 0, r = m * n - 1;
+            while (l != r){
+                int mid = (l + r - 1) >> 1;
+                if (A[mid / m][mid % m] < target)
+                    l = mid + 1;
+                else 
+                    r = mid;
+            }
+            return matrix[r / m][r % m] == B;
+        }
