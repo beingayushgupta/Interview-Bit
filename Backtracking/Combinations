@@ -1,0 +1,18 @@
+void comb(int A,vector<int> &res,vector<vector<int> > &ans,int index,int B){
+    if(B==res.size()){
+        ans.push_back(res);
+        return;
+    }
+    for(int i=index;i<=A;++i){
+        res.push_back(i);
+        comb(A,res,ans,i+1,B);
+        res.pop_back();
+    }
+}
+
+vector<vector<int> > Solution::combine(int A, int B) {
+    vector<int> res;
+    vector<vector<int> > ans;
+    comb(A,res,ans,1,B);
+    return ans;
+}
