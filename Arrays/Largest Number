@@ -1,0 +1,20 @@
+bool mycompare(int a,int b){
+         string str1=to_string(a),str2=to_string(b);
+         string str3=str1+str2,str4=str2+str1;
+         if(stol(str3)>stol(str4))
+            return 1;
+        else
+        return 0;
+}
+string Solution::largestNumber(const vector<int> &A) {
+    vector<int> B=A;
+    int n=A.size();
+    sort(B.begin(),B.end(),mycompare);
+    string str="";
+    for(int i=0;i<n;++i){
+        if(B[0]==0)
+            return str+=to_string(0);
+        str+=to_string(B[i]);
+    }
+    return str;
+}
