@@ -1,0 +1,19 @@
+void mksubset(vector<int> &A,vector<vector<int>> &res,vector<int> temp,int index){
+    for(int i=index;i<A.size();++i){
+        temp.push_back(A[i]);
+        res.push_back(temp);
+        mksubset(A,res,temp,i+1);
+        temp.pop_back();
+    }
+    return ;
+}
+
+
+vector<vector<int> > Solution::subsets(vector<int> &A) {
+    vector<vector<int>> res;
+    sort(A.begin(),A.end());
+    vector<int> temp;
+    res.push_back(temp);
+    mksubset(A,res,temp,0);
+    return res;
+}
