@@ -1,0 +1,19 @@
+void sub(vector<int> &A,vector<int> &res,vector<vector<int> > &ans,int index){
+    for(int i=index;i<A.size();++i){
+        res.push_back(A[i]);
+        ans.push_back(res);
+        sub(A,res,ans,i+1);
+        while(A[i]==A[i+1])
+            ++i;
+        res.pop_back();
+    }
+}
+
+vector<vector<int> > Solution::subsetsWithDup(vector<int> &A) {
+    vector<int> res;
+    vector<vector<int> > ans;
+    ans.push_back(res);
+    sort(A.begin(),A.end());
+    sub(A,res,ans,0);
+    return ans;
+}
