@@ -1,0 +1,16 @@
+int gcd(int B,int i){
+    while(i!=0){
+        B=B%i;
+        swap(B,i);
+    }
+    return B;
+}
+int Solution::cpFact(int A, int B) {
+    int n=0;
+    while(n!=1){
+         n=gcd(A,B);
+        A=A/n;
+    }
+    return A;
+        
+}
