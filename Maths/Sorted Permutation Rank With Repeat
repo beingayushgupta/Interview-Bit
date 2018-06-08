@@ -1,0 +1,80 @@
+long long fac(int n){
+    if(n==0||n==1)
+        return 1;
+    return (n*fac(n-1))%1000003;
+}
+
+int power(int x, unsigned int n, int d)
+{
+    int rem = 1;
+    int check = 0;
+    
+    if(x == 0){
+        return 0;
+    }
+    if(n == 0){
+        return 1;
+    }
+    
+    if(x < 0){
+        x = abs(x);
+        if(n%2 != 0){
+            check = 1;
+        }
+    }
+    
+     long long temp = x%d;
+    
+    while(n != 0){
+        if(n%2 != 0){
+            rem=(rem%d*temp)%d;
+        }
+        
+        temp = (temp%d*temp%d)%d;
+        
+        n = n/2;
+        
+    }
+    
+    if(check == 1){
+        return d-(int)rem;
+    }
+    
+    return (int)rem;
+}
+
+int Solution::findRank(string A) {
+    int n=A.size();
+    long long rank=1;
+     vector<int> d_count(52,0);
+        for(int j=0;j<n;++j){
+            if(int(A[j])>='A'&&int(A[j])<='Z'){
+                d_count[int(A[j])-'A']+=1;
+            }
+            else
+                d_count[int(A[j])-'a'+26]+=1;
+        }
+    for(int i=0;i<n;++i){
+        int less_than=0;
+        for(int j=i+1;j<n;++j){
+            if(int(A[i])>int(A[j]))
+                less_than++;
+        }
+        long long d_fac=1;
+        for(int ele:d_count){
+            d_fac*=fac(ele);
+            d_fac%=1000003;
+        }
+        long long temp=power(d_fac,1000001,1000003);
+        long long ans=(fac(n-i-1)*less_than)*temp;
+        ans%=1000003;
+        rank+=ans;
+        rank%=1000003;
+        if(int(A[i])>='A'&&int(A[i])<='Z'){
+                d_count[int(A[i])-'A']-=1;
+            }
+            else
+                d_count[int(A[i])-'a'+26]-=1;
+    }
+    return rank;
+}
