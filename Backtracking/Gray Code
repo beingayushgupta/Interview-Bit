@@ -1,0 +1,16 @@
+void grey(int A,vector<int> &res,int &num){
+    if(A==0){
+        res.push_back(num);
+        return;
+    }
+    grey(A-1,res,num);
+    num=num^(1<<(A-1));
+    grey(A-1,res,num);
+}
+
+vector<int> Solution::grayCode(int A) {
+    vector<int> res;
+    int num=0;
+    grey(A,res,num);
+    return res;
+}
