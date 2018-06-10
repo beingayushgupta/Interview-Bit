@@ -1,0 +1,62 @@
+bool unassigned(vector<vector<char> > &A,int &i,int &j){
+    for( i=0;i<9;++i){
+        for( j=0;j<9;++j){
+            if(A[i][j]=='.')
+                return true;
+        }
+    }
+    return false;
+}
+
+bool usedinrow(vector<vector<char> > &A,int row,int num){
+    for(int col=0;col<9;++col){
+        if(A[row][col]==num+48)
+            return true;
+    }
+    return false;
+}
+
+bool usedincol(vector<vector<char> > &A,int col,int num){
+    for(int row=0;row<9;++row){
+        if(A[row][col]==num+48)
+            return true;
+    }
+    return false;
+}
+
+bool usedinbox(vector<vector<char> > &A,int rowstart,int colstart,int num){
+    for(int row=0;row<3;++row){
+        for(int col=0;col<3;++col){
+            if(A[row+rowstart][col+colstart]==num+48){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+bool issafe(vector<vector<char> > &A,int row,int col,int num){
+    return !usedinrow(A,row,num)&&!usedincol(A,col,num)&&!usedinbox(A,row-row%3,col-col%3,num);
+}
+
+bool solve(vector<vector<char> > &A){
+    int row,col;
+    if(!unassigned(A,row,col)){
+        return true;
+    }
+    for(int i=1;i<=9;++i){
+        if(issafe(A,row,col,i)){
+            A[row][col]=i+48;
+            if(solve(A)){
+                return true;
+            }
+            A[row][col]='.';
+        }
+    }
+    return false;
+}
+
+
+
+void Solution::solveSudoku(vector<vector<char> > &A) {
+    solve(A);
+}
