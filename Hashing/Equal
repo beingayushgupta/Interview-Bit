@@ -1,0 +1,42 @@
+vector<int> Solution::equal(vector<int> &A) {
+    map<int,pair<int,int> > mp;
+    int n=A.size();
+    vector<int> res;
+    vector<int> ans;
+    for(int i=0;i<n;++i){
+        for(int j=i+1;j<n;++j){
+            int sum=A[i]+A[j];
+            if(mp.find(sum)!=mp.end()){
+                pair<int,int> p=mp[sum];
+                if(p.first!=i&&p.first!=j&&p.second!=i&&p.second!=j){
+                    res.clear();
+                    res.push_back(p.first);
+                    res.push_back(p.second);
+                    res.push_back(i);
+                    res.push_back(j);
+                    if(!ans.size()){
+                        ans=res;
+                    }
+                    else{
+                        bool replace=false;
+                        for(int k=0;k<4;++k){
+                            if(res[k]<ans[k]){
+                                replace=true;
+                                break;
+                            }
+                            if(res[k]>ans[k])
+                                break;
+                        }
+                        if(replace){
+                            ans=res;
+                        }
+                    }
+                }
+            }
+            else{
+                mp[sum]={i,j};
+            }
+        }
+    }
+    return ans;
+}
