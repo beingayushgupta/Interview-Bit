@@ -1,0 +1,59 @@
+struct TrieNode{
+    TrieNode* child[26];
+    bool unique;
+    
+    TrieNode(){
+        for(int i = 0; i < 26; i++){
+            child[i] = NULL;
+        }
+        unique = true;
+    }
+};
+
+void makeTrie(TrieNode* root, string s){
+    for(int i=0;i < s.size();++i){
+        if(root->child[s[i]-'a'] == NULL){
+            root->child[s[i]-'a'] = new TrieNode();
+        }
+        else{
+            (root->child[s[i]-'a'])->unique = false;
+        }
+        root = root->child[s[i]-'a'];
+    }
+}
+
+string getPre(TrieNode* root, string s){
+    string sol = "";
+    
+    if(s.size() == 0){
+        return sol;
+    }
+    
+    for(int i=0;i<s.size()&&root->unique==false;++i){
+        root= root->child[s[i]-97];    
+        sol = sol + s[i];
+    }
+    return sol;
+}
+
+vector<string> Solution::prefix(vector<string> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    
+    vector<string> sol;
+    
+    TrieNode* root = new TrieNode();
+    root->unique=false;
+    for(int i = 0; i < A.size(); i++){
+        makeTrie(root, A[i]);
+    }
+    
+    for(int i = 0; i < A.size(); i++){
+        sol.push_back(getPre(root, A[i]));
+    }
+    
+    return sol;
+    
+}
