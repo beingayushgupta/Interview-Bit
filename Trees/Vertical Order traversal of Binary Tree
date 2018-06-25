@@ -1,0 +1,36 @@
+vector<vector<int> > Solution::verticalOrderTraversal(TreeNode* A) {
+    queue<TreeNode* > q;
+    vector<vector<int>> ans;
+    if(A==NULL)
+        return ans;
+    q.push(A);
+    unordered_map<TreeNode* , int> m;
+    m[A] = 0;
+    TreeNode* t = A;
+    //int min = 0;
+    //int max = 0;
+    map<int, vector<int>> m2;
+    
+    //vector<vector<int>> ans;
+    while(!q.empty()){
+        TreeNode* temp = q.front();
+        q.pop();
+        
+        if(temp->left != NULL){
+            q.push(temp->left);
+            m[temp->left] = m[temp] - 1;
+        }
+        if(temp->right != NULL){
+            q.push(temp->right);
+            m[temp->right] = m[temp] + 1;
+        }
+        
+        m2[m[temp]].push_back(temp->val);
+    }
+    for(auto it = m2.begin(); it != m2.end(); it++){
+        vector<int> t = it->second;
+        ans.push_back(t);
+    }
+    return ans;
+    
+}
