@@ -1,0 +1,75 @@
+void convert(string &s){
+    int n=s.size();
+    for(int i=0;i<n;++i)
+        if(s[i]=='_')
+            s[i]=' ';
+}
+
+class Node{
+     public:
+    bool isleaf;
+    Node *next[26];
+   
+    Node(){
+        isleaf=false;
+        for(int i=0;i<26;++i){
+            next[i]=NULL;
+        }
+    }
+};
+void insert(string s,Node *trie){
+    int n=s.size();
+    for(int i=0;i<n;++i){
+        if(trie->next[s[i]-'a']==NULL)
+            trie->next[s[i]-'a']=new Node();
+        trie=trie->next[s[i]-'a'];
+    }
+    trie->isleaf=true;
+}
+
+bool search(string s,Node *trie){
+    int n=s.size();
+    for(int i=0;i<n;++i){
+        if(!trie->next[s[i]-'a'])
+            return false;
+        trie=trie->next[s[i]-'a'];
+    }
+    return trie->isleaf;
+}
+
+vector<int> Solution::solve(string A, vector<string> &B) {
+    convert(A);
+    stringstream ss;
+    ss<<A;
+    string word;
+    Node *trie=new Node();
+    while(ss>>word){
+        insert(word,trie);
+      //  cout<<word<<'\n';
+    }
+    int n=B.size();
+    vector<pair<int,int> > result(n);
+    for(int i=0;i<n;++i){
+        convert(B[i]);
+        ss.clear();
+        ss<<B[i];
+        int k=0;
+        while(ss>>word){
+            //cout<<word<<'\n';
+            if(search(word,trie))
+                k++;
+        }
+        //cout<<k<<'\n';
+        result[i].first=k;
+        result[i].second=i;
+    }
+    vector<int> res;
+    sort(result.begin(),result.end(),[&](pair<int,int>a,pair<int,int>b){if(a.first!=b.first) return a.first>b.first;
+        else
+            return a.second<b.second;
+    });
+    for(int i=0;i<n;++i){
+        res.push_back(result[i].second);
+    }
+    return res;
+}
