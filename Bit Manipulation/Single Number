@@ -1,0 +1,8 @@
+int Solution::singleNumber(const vector<int> &ar) {
+    int ar_size=ar.size();
+    int res = ar[0];
+     for (int i=1; i < ar_size; i++)
+        res = res ^ ar[i];
+ 
+     return res;
+}
