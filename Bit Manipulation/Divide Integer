@@ -1,0 +1,30 @@
+int Solution::divide(int dividend, int divisor) {
+    if(!dividend)
+    return 0;
+    long long  n=dividend,m=divisor;
+    // otherwise it will be positive
+  int sign = ((n < 0) ^ (divisor < 0)) ? -1 : 1;
+    
+  // remove sign of operands
+  n = abs(n);
+  m = abs(m);
+ 
+  // Initialize the quotient
+  long long q = 0, temp = 0;
+ 
+  // test down from the highest bit and
+  // accumulate the tentative value for
+  // valid bit
+  for (int i = 31; i >= 0; --i) {
+ 
+    if (temp + (m << i) <= n) {
+      temp += m << i;
+      q |= 1LL<<i ;
+    }
+  }
+  
+  if (sign < 0) q = -q;
+
+    // check for overflow and return
+    return q >= INT_MAX || q < INT_MIN ? INT_MAX : q;
+}
