@@ -1,0 +1,22 @@
+unsigned int ReverseTheBits(unsigned int num)
+{
+    unsigned int count = (INT_BITS -1); 
+    unsigned int tmp = num;         //  Assign num to the tmp 
+      
+    num >>= 1; // shift num because LSB already assigned to tmp
+    
+    while(num)
+    {
+       tmp <<= 1;  //shift the tmp because alread have the LSB of num  
+       
+       tmp |= num & 1; // putting the set bits of num
+       
+       num >>= 1; 
+       
+       count--;
+    }
+    
+    tmp <<= count; //when num become zero shift tmp from the remaining counts
+    
+    return tmp;
+}
